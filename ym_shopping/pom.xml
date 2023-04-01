@@ -11,7 +11,7 @@
     <modules>
         <module>oauth-server</module>
         <module>gateway-server</module>
-        <module>order-common</module>
+        <module>order-common/order-security</module>
         <module>order-syetem/order-pay</module>
     </modules>
 

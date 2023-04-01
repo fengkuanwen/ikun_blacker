@@ -11,8 +11,8 @@
         <vxLogin v-else-if="loginComponentFlag === 'vxLogin'? true:false"/>
         <smsLogin v-else-if="loginComponentFlag ==='smsLogin'? true:false"></smsLogin>
         <registry v-else ></registry>
-        
     </div>
+       
 </template>
   
 <script>
@@ -21,12 +21,11 @@ import registry from '../../components/login/Registry'
 import vxLogin from '../../components/login/VxLogin'
 import smsLogin from '../../components/login/SmsLogin'
 import pwdLogin from '../../components/login/PwdLogin'
-
   export default {
     name: 'login',
     data(){
         return{
-            loginComponentFlag:'login'
+            loginComponentFlag:'login',
         }
     },methods:{
         updateLoginFlag(str){
@@ -45,11 +44,14 @@ import pwdLogin from '../../components/login/PwdLogin'
         // 登陆组件
         registry,vxLogin,smsLogin,pwdLogin,
         
+    },
+    mounted(){
+    
     }
   }
-  </script>
+</script>
 <style>
-  a:hover{
+ a:hover{
     color: none;
   }
   a{
@@ -58,7 +60,7 @@ import pwdLogin from '../../components/login/PwdLogin'
     margin-left: 10px;
   }
   body {
-      background: url('../../assets/img/LoginBack.png') repeat ;
+      background: url('../../assets/img/loginBack.png') repeat ;
       background-size: 100% auto;
       /*设置背景图片*/
   }
@@ -107,8 +109,5 @@ import pwdLogin from '../../components/login/PwdLogin'
       border-radius: 15px;
       background-color: #85FFBD;
       background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%);
-
-
-
   }
 </style>
