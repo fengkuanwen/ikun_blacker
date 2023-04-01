@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     // 本机网关服务地址
     serverPath:"http://localhost:9001",
+    // 验证码时间戳缓存
     captchaTimeStampCache:" "
   },
   mutations: {
