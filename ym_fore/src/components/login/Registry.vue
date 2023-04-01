@@ -1,6 +1,6 @@
 <template>
     <div id="loginbox">
-        <h2>短信登陆</h2>
+        <h2>欢迎注册</h2>
         <form class="form" action="#" method="get">
             <div class="item">
                 <input type="text" placeholder="姓名" id="fullname" maxlength="4" required>
@@ -20,7 +20,7 @@
   
 <script>
   export default {
-    name: 'smsLogin',
+    name: 'registry',
     components: {
     }
   }
