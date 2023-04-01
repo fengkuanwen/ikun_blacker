@@ -8,7 +8,9 @@
     "lint": "set NODE_OPTIONS=--openssl-legacy-provider & vue-cli-service lint"
   },
   "dependencies": {
+    "bootstrap": "^5.2.3",
     "core-js": "^2.6.5",
+    "jquery": "^3.6.4",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
