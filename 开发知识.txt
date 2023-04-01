@@ -1,0 +1,32 @@
+# 图片验证码
+
+**1、java后端生成验证码**
+
+~~~java
+	@GetMapping("/captcha")
+    public void hello2(HttpServletResponse response) throws Exception{
+        //定义图形验证码的长和宽
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+        ServletOutputStream outputStream = response.getOutputStream();
+        //图形验证码写出，可以写出到文件，也可以写出到流
+        lineCaptcha.write(outputStream);
+        //输出code
+        System.out.println("lineCaptcha = " + lineCaptcha.getCode());
+        outputStream.flush();
+        outputStream.close();
+    }
+~~~
+
+**2、前端img标签src直接是java接口**
+
+~~~java
+ <img :src="captchaSrc" @click="changeCaptcha" alt="验证码" width="100px" height="50px"/>
+captchaSrc : 'http://localhost:9001/auth/captcha'   
+    
+changeCaptcha(){
+           //添加时间戳是为了图片更新，每次请求不一样，防止浏览器缓存
+            this.captchaSrc = "http://localhost:9001/auth/captcha?timeStamp="+new Date().getTime()
+        }    
+     
+~~~
+
