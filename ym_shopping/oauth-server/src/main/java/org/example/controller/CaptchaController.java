@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +21,7 @@ public class CaptchaController {
     StringRedisTemplate stringRedisTemplate;
     @GetMapping("/login")
     public void getLoginCaptcha(@RequestParam("timeStamp") String timeStamp,HttpServletResponse response) throws Exception{
+
         //定义图形验证码的长和宽
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
         ServletOutputStream outputStream = response.getOutputStream();
@@ -27,6 +29,22 @@ public class CaptchaController {
         lineCaptcha.write(outputStream);
         //redis生成全局ID 存储验证码 ：前端验证时需携带timeStamp时间戳
         stringRedisTemplate.opsForValue().set("captchaCode:login:"+timeStamp,lineCaptcha.getCode(),2, TimeUnit.MINUTES);
+        outputStream.flush();
+        outputStream.close();
+    }
+
+    @GetMapping("/registry")
+    public void getRegistryCaptcha(@RequestParam("timeStamp") String timeStamp, HttpServletResponse response) throws Exception{
+        //定义图形验证码的长和宽
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+        Cookie cookie = new Cookie("registryCaptchaCode",lineCaptcha.getCode());
+        cookie.setPath("/");
+        response.addCookie(cookie);
+        ServletOutputStream outputStream = response.getOutputStream();
+//    ("registryCaptchaCode",lineCaptcha.getCode());
+        //图形验证码写出到流
+        lineCaptcha.write(outputStream);
+        //redis生成全局ID 存储验证码 ：前端验证时需携带timeStamp时间戳
         outputStream.flush();
         outputStream.close();
     }

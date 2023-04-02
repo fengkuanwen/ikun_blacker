@@ -10,10 +10,28 @@ import java.util.Collection;
 
 @ToString
 public class User implements UserDetails {
-    private Long id;
+    private String id;
     private String name;
     private int age;
     private String pwd;
+
+    private String phone;
+
+    public User(String id, String name, int age, String pwd, String phone) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.pwd = pwd;
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -55,11 +73,11 @@ public class User implements UserDetails {
         return true;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

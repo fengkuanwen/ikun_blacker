@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <div style="position: absolute; top 50%;left: 53%; font-size: 20rpx;">
+        <div style="position: absolute; top 50%;left: 51%; font-size: 20rpx;">
             <a style=" " @click.prevent="updateLoginFlag('login')">密码登陆</a>
             <a style=" " @click.stop="updateLoginFlag('vxLogin')">微信登陆</a>
             <a style=" " @click.prevent="updateLoginFlag('smsLogin')">短信登陆</a>
@@ -10,7 +10,7 @@
         <pwdLogin v-if="loginComponentFlag === 'login'? true:false"/>
         <vxLogin v-else-if="loginComponentFlag === 'vxLogin'? true:false"/>
         <smsLogin v-else-if="loginComponentFlag ==='smsLogin'? true:false"></smsLogin>
-        <registry v-else ></registry>
+        <registry  v-else ></registry>
     </div>
        
 </template>
@@ -45,9 +45,6 @@ import pwdLogin from '../../components/login/PwdLogin'
         registry,vxLogin,smsLogin,pwdLogin,
         
     },
-    mounted(){
-    
-    }
   }
 </script>
 <style>
@@ -67,9 +64,10 @@ import pwdLogin from '../../components/login/PwdLogin'
 
   #loginbox {
       width: 30%;
-      height: 400px;
+      height: 500px;
       margin: 0 auto;
-      margin-top: 15%;
+      margin-top: 12%;
+      margin-left: 33%;
       text-align: center;
       background: #00000060;
       padding: 20px 50px;

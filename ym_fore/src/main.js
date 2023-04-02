@@ -3,6 +3,8 @@ import App from './App.vue';
 import router from './router';
 import store from './store';
 import axios from "axios"
+import VueCookies from "vue-cookies";
+Vue.use(VueCookies);
 Vue.prototype.$request = axios
 // 增加请求头
 axios.interceptors.request.use(

@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true)
 @EnableWebSecurity
@@ -41,6 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/r/**").authenticated()//访问/r开始的请求需要认证通过
                 .anyRequest().permitAll()//其它请求全部放行
                 .and()
+                .csrf().disable()
+//                登陆服务无需担心csrf攻击（csrf攻击原理）
                 .formLogin().successForwardUrl("/login-success");//登录成功跳转到/login-success
         http.logout().logoutUrl("/logout");//退出地址
     }
