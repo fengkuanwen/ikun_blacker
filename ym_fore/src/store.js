@@ -9,7 +9,9 @@ export default new Vuex.Store({
     serverPath:"http://localhost:9001",
     // 验证码时间戳缓存
     captchaTimeStampCache:" ",
-    registryCaptchaTimeStampCache:" "
+
+    // 登陆获取token
+    token:""
   },
   mutations: {
   changeCaptchaTimeStampCache(state, val){
@@ -17,7 +19,7 @@ export default new Vuex.Store({
   },
   changeRegistryCaptchaTimeStampCache(state, val){
     state.registryCaptchaTimeStampCache=val;
-  }
+}
   },
   actions: {
 
