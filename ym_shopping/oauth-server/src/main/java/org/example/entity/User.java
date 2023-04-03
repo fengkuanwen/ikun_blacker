@@ -1,5 +1,7 @@
 package org.example.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
     private String id;
     private String name;
@@ -16,14 +20,6 @@ public class User implements UserDetails {
     private String pwd;
 
     private String phone;
-
-    public User(String id, String name, int age, String pwd, String phone) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.pwd = pwd;
-        this.phone = phone;
-    }
 
     public String getPhone() {
         return phone;

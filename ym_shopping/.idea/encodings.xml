@@ -6,8 +6,16 @@
     <file url="file://$PROJECT_DIR$/oauth-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/oauth-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-common/order-security/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-common/order-security/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-common/order-utils/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-common/order-utils/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-system/order-pay/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-system/order-pay/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/order-system/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
 </project>
