@@ -5,11 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.example</groupId>
-        <artifactId>order-common</artifactId>
+        <artifactId>ym_shopping</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
+    <packaging>pom</packaging>
 
-    <artifactId>order-security</artifactId>
+    <artifactId>order-common</artifactId>
+    <modules>
+        <module>order-security</module>
+        <module>order-utils</module>
+    </modules>
+
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
