@@ -1,5 +1,7 @@
 package org.example.config;
 
+import org.example.smsLogin.PasswordTokenGranter;
+import org.example.smsLogin.PhoneSmsTokenGranter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -10,17 +12,25 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.CompositeTokenGranter;
+import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.TokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Resource(name="authorizationServerTokenServicesCustom")
     private AuthorizationServerTokenServices authorizationServerTokenServices;
+
     @Autowired
-    private AuthenticationManager authenticationManager;
+    MyUserDetailsService myUserDetailsService;
     //客户端详情服务
     /**
      * 用来配置客户端详情服务（ClientDetailsService），
@@ -36,7 +46,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 //                .secret("XcWebApp")//客户端密钥
                 .secret(new BCryptPasswordEncoder().encode("XcWebApp"))//客户端密钥
                 .resourceIds("xuecheng-plus")//资源列表
-                .authorizedGrantTypes("authorization_code", "password","client_credentials","implicit","refresh_token")// 该client允许的授权类型authorization_code,password,refresh_token,implicit,client_credentials
+                .authorizedGrantTypes("authorization_code", "password","sms_code","client_credentials","implicit","refresh_token")// 该client允许的授权类型authorization_code,password,refresh_token,implicit,client_credentials
                 .scopes("all")// 允许的授权范围
                 .autoApprove(false)//false跳转到授权页面
                 //客户端接收授权码的重定向地址
@@ -84,10 +94,22 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        endpoints
-                .authenticationManager(authenticationManager)//认证管理器
+
+        //在原有授权的基础上增加自定义手机号短信登录
+        List<TokenGranter> tokenGranters = getTokenGranters(endpoints.getTokenServices(), endpoints.getClientDetailsService(), endpoints.getOAuth2RequestFactory());
+        //原有的授权endpoints.getTokenGranter()
+        tokenGranters.add(endpoints.getTokenGranter());
+        endpoints.tokenGranter(new CompositeTokenGranter(tokenGranters))
                 .tokenServices(authorizationServerTokenServices)//令牌管理服务
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST);
+    }
+    private List<TokenGranter> getTokenGranters(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory) {
+        PhoneSmsTokenGranter phoneSmsTokenGranter = new PhoneSmsTokenGranter(tokenServices, clientDetailsService, requestFactory, myUserDetailsService);
+        PasswordTokenGranter passwordTokenGranter = new PasswordTokenGranter(tokenServices, clientDetailsService, requestFactory, myUserDetailsService);
+        ArrayList<TokenGranter> tokenGranters = new ArrayList<>();
+        tokenGranters.add(passwordTokenGranter);
+        tokenGranters.add(phoneSmsTokenGranter);
+        return tokenGranters;
     }
 
     //令牌端点的安全配置

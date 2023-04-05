@@ -1,4 +1,4 @@
-package org.example.interceptor;
+package org.example.authFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -21,18 +21,22 @@ public class LoginCaptchaFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
         // 因为 HttpServletRequest 不能直接操作 parmeterMap.所以构建 Mapper 对象来进行操作
-        String captcha = request.getParameterValues("captcha")[0];
-        String timeStamp = request.getParameterValues("timeStamp")[0];
+        String grantType = request.getParameterValues("grant_type")[0];
+//        登陆是密码模式的时候才拦截该请求
+        if (grantType != null && grantType.equals("password")){
+            String captcha = request.getParameterValues("captcha")[0];
+            String timeStamp = request.getParameterValues("timeStamp")[0];
 //        简单写一下嘻嘻，正确的应该是获取response流，然后响应
-        if (captcha==null||captcha.isEmpty()||timeStamp==null||timeStamp.isEmpty()) throw new ServletException("验证码错误");
-        else {
-            String redisCaptcha = stringRedisTemplate.opsForValue().get("captchaCode:login:" + timeStamp);
-           if(captcha.equals(redisCaptcha)){
-               filterChain.doFilter(servletRequest,servletResponse);
-           }else {
-               throw new ServletException("验证码错误");
-           }
-        }
+            if (captcha==null||captcha.isEmpty()||timeStamp==null||timeStamp.isEmpty()) throw new ServletException("验证码错误");
+            else {
+                String redisCaptcha = stringRedisTemplate.opsForValue().get("captchaCode:login:" + timeStamp);
+                if(captcha.equals(redisCaptcha)){
+                    filterChain.doFilter(servletRequest,servletResponse);
+                }else {
+                    throw new ServletException("验证码错误");
+                }
+            }
+        }else filterChain.doFilter(servletRequest,servletResponse);
 
     }
 }

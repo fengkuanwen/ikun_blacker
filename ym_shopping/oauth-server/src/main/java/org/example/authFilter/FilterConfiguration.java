@@ -1,4 +1,4 @@
-package org.example.interceptor;
+package org.example.authFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -8,7 +8,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.servlet.FilterRegistration;
 import java.util.Arrays;
 
 @Configuration
