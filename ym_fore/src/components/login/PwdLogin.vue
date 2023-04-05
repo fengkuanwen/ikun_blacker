@@ -49,9 +49,7 @@
                         responseType:"json",
                     }).then((res)=>{
                             alert("登陆成功")
-                            this.$store.state.token=res.data.access_token;
-                     
-                        
+                            this.$store.state.token=res.data.access_token; 
                     },(err) => {
                         console.log(err);
                         alert("请检查输入！验证码过期时间为俩分钟")

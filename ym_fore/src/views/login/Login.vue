@@ -98,7 +98,7 @@ import pwdLogin from '../../components/login/PwdLogin'
       /*去除输入框的外边框*/
   }
 
-  #loginbox button {
+  #btn {
       margin-top: 20px;
       width: 180px;
       height: 30px;

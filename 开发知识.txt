@@ -37,3 +37,29 @@ changeCaptcha(){
 **3、存储到cookie**
 
 存储到cookie中的数据要指定path路径，因为前端只能访问当前界面路径的cookie值
+
+**4、后端生成全局唯一ID存储到redis：且后端返回给前端生成的全局唯一ID，前端验证时候需要携带这个ID**
+
+**5、存储到redis，后端根据手机号（用户唯一标识）存储，前端验证时携带这个表示即可**
+
+# 短信登陆
+
+**https://blog.csdn.net/qq_33396608/article/details/103271320**
+
+**tokenGranter类似springSecurity中的usernamePasswordFilter，Auth授权服务器会根据客户端传来的granter_type 调用对应的TokenGranter来进行设置AuthencationToken->Authencation，进而交给AuthencationProvider来进行认证，这时我们无需重写默认的DaoAuthencationProvider，只需要当客户端的授权类型为sms_code时，通过Phone来获取AuthencationToken，并且在获取的时候先判断sms_code是正确，根据手机号查询用户不存在或者短信验证码不正确的时候直接抛出异常，如果都正确，还是通过userDetailService获取默认用户，在交给DaoAuthenticationProvider来进行默认的账号密码认证（账号密码一定正确，因为我们通过TokenGranter获取的账号密码）**
+
+# 微信登陆
+
+**微信登陆也就是我们自己写的授权认证服务器已经没用了，客户端先访问微信授权服务器，获取微信用户基本信息和OpenId，然后直接拿着这个去访问资源服务器，资源服务器拿到token去微信授权服务器验证token，验证成功获取openId等信息，这时候我们可以把用户的UserId和微信的openId进行绑定，就知道了这个时候登陆的微信账号是哪个用户**
+
+首先，需要在微信公众平台后台配置好服务器地址，然后在Java代码中实现如下流程：
+
+首先，调用微信公众平台的OAuth2.0授权接口，获取用户的授权信息。具体的，在用户点击授权登录按钮时，向微信服务器发送请求，微信服务器会返回一个授权链接，用户点击授权链接后，微信服务器会跳转到你配置的回调地址，并带上授权码(code)。
+
+使用授权码(code)调用微信公众平台的OAuth2.0接口，获取用户的access_token和openid。
+
+使用access_token和openid调用微信公众平台的用户信息接口，获取用户的基本信息，包括昵称、头像等。
+
+在你的应用服务器端生成一个userId，并将用户的openid和userId存入数据库中，以便之后的使用。
+
+将生成的userId返回给客户端，客户端可以通过userId来标识用户，并在之后的操作中使用。
